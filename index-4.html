@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swastik Health Care Services | Staff Management</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:linear-gradient(135deg,#123b6d,#1769aa);color:#fff;padding:28px 18px}
+.wrap{max-width:1100px;margin:auto}.brand{font-size:25px;font-weight:800}.sub{opacity:.9;margin-top:6px}
+main{padding:24px 18px}.grid{display:grid;grid-template-columns:360px 1fr;gap:22px}
+.card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 8px 25px #17203312}
+h2{margin:0 0 18px}.field{margin-bottom:14px}label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #d8e0ea;border-radius:10px;font-size:15px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#1769aa}textarea{min-height:70px;resize:vertical}
+.types{display:grid;grid-template-columns:1fr 1fr;gap:10px}.types label{border:1px solid #d8e0ea;border-radius:11px;padding:12px;cursor:pointer}
+.types input{width:auto;margin-right:7px}
+button{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}
+.primary{width:100%;background:#1769aa;color:#fff}.secondary{background:#edf3f9;color:#173d65}
+.toolbar{display:flex;gap:10px;margin-bottom:16px}.toolbar input{flex:1}
+.staff{border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;gap:15px}
+.name{font-size:18px;font-weight:800}.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#e8f3ff;color:#1769aa;font-size:12px;font-weight:800;margin-top:7px}
+.meta{color:#5e6b7d;font-size:14px;line-height:1.7;margin-top:7px}.actions{display:flex;gap:7px;align-items:center}
+.empty{text-align:center;color:#7a8797;padding:35px 10px}
+.stats{display:flex;gap:10px;margin-bottom:16px}.stat{flex:1;background:#f5f8fc;border-radius:12px;padding:12px}.stat b{display:block;font-size:21px}.stat span{font-size:12px;color:#687587}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.staff{flex-direction:column}.actions{justify-content:flex-end}.toolbar{flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">SWASTIK HEALTH CARE SERVICES</div><div class="sub">Staff Registration & Management</div></div></header>
+<main class="wrap">
+<div class="grid">
+<section class="card">
+<h2 id="formTitle">Register Staff</h2>
+<form id="staffForm">
+<div class="field"><label>Full Name *</label><input id="name" required placeholder="Enter full name"></div>
+<div class="field"><label>Mobile Number *</label><input id="phone" required type="tel" inputmode="numeric" placeholder="10-digit mobile number"></div>
+<div class="field"><label>Age *</label><input id="age" required type="number" min="18" max="80" placeholder="Age"></div>
+<div class="field"><label>Staff Type *</label><div class="types">
+<label><input type="radio" name="type" value="Nursing Staff" checked> Nursing Staff</label>
+<label><input type="radio" name="type" value="Care Taker Staff"> Care Taker Staff</label>
+</div></div>
+<div class="field"><label>Qualification *</label><input id="qualification" required placeholder="e.g. ANM, GNM, 12th Pass"></div>
+<div class="field"><label>Experience *</label><input id="experience" required placeholder="e.g. 2 years / Fresher"></div>
+<div class="field"><label>Address</label><textarea id="address" placeholder="Enter address"></textarea></div>
+<div class="field"><label>Joining Date</label><input id="joining" type="date"></div>
+<button class="primary" type="submit" id="saveBtn">Add Staff</button>
+<button class="secondary" type="button" id="cancelBtn" style="display:none;width:100%;margin-top:8px">Cancel Edit</button>
+</form>
+</section>
+
+<section class="card">
+<h2>Staff Directory</h2>
+<div class="stats"><div class="stat"><b id="total">0</b><span>Total Staff</span></div><div class="stat"><b id="nurses">0</b><span>Nursing Staff</span></div><div class="stat"><b id="care">0</b><span>Care Takers</span></div></div>
+<div class="toolbar"><input id="search" placeholder="Search by name or mobile number...">
+<select id="filter"><option value="All">All Staff</option><option value="Nursing Staff">Nursing Staff</option><option value="Care Taker Staff">Care Taker Staff</option></select></div>
+<div id="list"></div>
+</section>
+</div>
+</main>
+<script>
+const KEY="swastik_staff_v1";
+let staff=JSON.parse(localStorage.getItem(KEY)||"[]"), editId=null;
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem(KEY,JSON.stringify(staff));render()}
+function render(){
+ const q=$("search").value.toLowerCase(), f=$("filter").value;
+ const data=staff.filter(s=>(f==="All"||s.type===f)&&((s.name+" "+s.phone).toLowerCase().includes(q)));
+ $("total").textContent=staff.length;$("nurses").textContent=staff.filter(s=>s.type==="Nursing Staff").length;$("care").textContent=staff.filter(s=>s.type==="Care Taker Staff").length;
+ $("list").innerHTML=data.length?data.map(s=>`<div class="staff"><div><div class="name">${esc(s.name)}</div><span class="badge">${esc(s.type)}</span><div class="meta">📱 ${esc(s.phone)}<br>🎂 Age: ${esc(s.age)} &nbsp; | &nbsp; 🎓 ${esc(s.qualification)}<br>💼 Experience: ${esc(s.experience)}${s.joining?`<br>📅 Joined: ${esc(s.joining)}`:""}${s.address?`<br>📍 ${esc(s.address)}`:""}</div></div><div class="actions"><button class="secondary" onclick="edit('${s.id}')">Edit</button><button class="secondary" onclick="removeStaff('${s.id}')">Delete</button></div></div>`).join(""):`<div class="empty">No staff registered yet.</div>`;
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+$("staffForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const obj={id:editId||Date.now().toString(),name:$("name").value.trim(),phone:$("phone").value.trim(),age:$("age").value, type:document.querySelector('input[name="type"]:checked').value,qualification:$("qualification").value.trim(),experience:$("experience").value.trim(),address:$("address").value.trim(),joining:$("joining").value};
+ if(editId) staff=staff.map(s=>s.id===editId?obj:s); else staff.unshift(obj);
+ save(); reset();
+});
+function edit(id){const s=staff.find(x=>x.id===id);editId=id;$("formTitle").textContent="Edit Staff";$("saveBtn").textContent="Update Staff";$("cancelBtn").style.display="block";
+$("name").value=s.name;$("phone").value=s.phone;$("age").value=s.age;$("qualification").value=s.qualification;$("experience").value=s.experience;$("address").value=s.address;$("joining").value=s.joining;document.querySelectorAll('input[name="type"]').forEach(r=>r.checked=r.value===s.type);scrollTo({top:0,behavior:"smooth"})}
+function removeStaff(id){if(confirm("Delete this staff record?")){staff=staff.filter(s=>s.id!==id);save()}}
+function reset(){editId=null;$("staffForm").reset();document.querySelector('input[name="type"][value="Nursing Staff"]').checked=true;$("formTitle").textContent="Register Staff";$("saveBtn").textContent="Add Staff";$("cancelBtn").style.display="none"}
+$("cancelBtn").onclick=reset;$("search").oninput=render;$("filter").onchange=render;render();
+</script>
+</body>
+</html>
