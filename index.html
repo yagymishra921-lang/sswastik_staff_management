@@ -1,86 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+< lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Swastik Health Care Services | Staff Management</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swastik Health Care Services</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f4f7fb;color:#172033}
-header{background:linear-gradient(135deg,#123b6d,#1769aa);color:#fff;padding:28px 18px}
-.wrap{max-width:1100px;margin:auto}.brand{font-size:25px;font-weight:800}.sub{opacity:.9;margin-top:6px}
-main{padding:24px 18px}.grid{display:grid;grid-template-columns:360px 1fr;gap:22px}
-.card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 8px 25px #17203312}
-h2{margin:0 0 18px}.field{margin-bottom:14px}label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #d8e0ea;border-radius:10px;font-size:15px;outline:none}
-input:focus,select:focus,textarea:focus{border-color:#1769aa}textarea{min-height:70px;resize:vertical}
-.types{display:grid;grid-template-columns:1fr 1fr;gap:10px}.types label{border:1px solid #d8e0ea;border-radius:11px;padding:12px;cursor:pointer}
-.types input{width:auto;margin-right:7px}
-button{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}
-.primary{width:100%;background:#1769aa;color:#fff}.secondary{background:#edf3f9;color:#173d65}
-.toolbar{display:flex;gap:10px;margin-bottom:16px}.toolbar input{flex:1}
-.staff{border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;gap:15px}
-.name{font-size:18px;font-weight:800}.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#e8f3ff;color:#1769aa;font-size:12px;font-weight:800;margin-top:7px}
-.meta{color:#5e6b7d;font-size:14px;line-height:1.7;margin-top:7px}.actions{display:flex;gap:7px;align-items:center}
-.empty{text-align:center;color:#7a8797;padding:35px 10px}
-.stats{display:flex;gap:10px;margin-bottom:16px}.stat{flex:1;background:#f5f8fc;border-radius:12px;padding:12px}.stat b{display:block;font-size:21px}.stat span{font-size:12px;color:#687587}
-@media(max-width:800px){.grid{grid-template-columns:1fr}.staff{flex-direction:column}.actions{justify-content:flex-end}.toolbar{flex-direction:column}}
+:root{--n:#10284d;--g:#e7ad25;--r:#8c2b20;--m:#647086}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#12233f}a{text-decoration:none;color:inherit}.c{width:min(1160px,92%);margin:auto}
+header{height:74px;background:#fff;display:flex;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 2px 15px #0001}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{display:flex;align-items:center;gap:9px}.mark{width:43px;height:43px;border:3px solid var(--r);border-radius:50%;display:grid;place-items:center;color:var(--r);font-size:22px}.lt b{display:block;color:var(--r);font-size:24px;letter-spacing:1px}.lt span{font-size:10px;font-weight:800;letter-spacing:.7px}nav{display:flex;gap:28px;font-size:14px;font-weight:700}nav a:first-child{color:#bd8500;border-bottom:3px solid var(--g);padding-bottom:8px}.call{background:var(--n);color:white;padding:12px 18px;border-radius:7px;font-size:13px;font-weight:800}
+.hero{min-height:470px;background:linear-gradient(90deg,#050a10ee,#101820c9,#0002),url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1800&q=85") center/cover}.hg{min-height:470px;display:grid;grid-template-columns:1fr 310px;gap:55px;align-items:center}.k{color:#f2b625;font-size:13px;font-weight:900}.hero h1{font-size:48px;line-height:1.12;color:#fff;margin:17px 0}.hero p{max-width:620px;color:#fff;line-height:1.65;font-size:16px}.btns{display:flex;gap:13px;margin-top:25px}.btn{padding:14px 22px;border-radius:6px;font-weight:800;border:1px solid #fff;color:#fff}.gold{background:var(--g);border-color:var(--g);color:#17233a}.form{background:#fff;border-radius:14px;padding:24px;box-shadow:0 15px 40px #0005}.form h2{margin:0;text-align:center;font-size:20px}.form p{text-align:center;color:#6d7787;font-size:13px}.form input,.form select{width:100%;padding:12px;margin:6px 0;border:1px solid #dbe1e9;border-radius:7px}.form button,.contact button{width:100%;border:0;background:var(--n);color:#fff;padding:13px;border-radius:7px;font-weight:800}
+.features{margin-top:-34px;position:relative;z-index:2;background:#fff;border-radius:15px;box-shadow:0 8px 25px #0002;display:grid;grid-template-columns:repeat(4,1fr)}.feature{padding:22px 24px;border-right:1px solid #e8edf3;display:flex;gap:13px}.feature:last-child{border:0}.ico{min-width:42px;height:42px;border-radius:50%;background:#f2b82a;color:#fff;display:grid;place-items:center;font-weight:900}.feature h3{margin:0;font-size:14px}.feature p{margin:7px 0 0;color:#667286;font-size:12px;line-height:1.55}
+section{padding:72px 0}.head{text-align:center;margin-bottom:35px}.head .k{color:#d39713}.head h2{font-size:28px;margin:9px 0}.line{width:55px;height:3px;background:var(--g);margin:auto}.services{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.service{border:1px solid #e5eaf0;border-radius:8px;padding:24px 12px;text-align:center;box-shadow:0 4px 16px #0001}.service .big{font-size:35px;margin-bottom:15px}.service h3{font-size:14px}.service p{font-size:12px;color:#68758a;line-height:1.5}
+.stats{background:var(--n);color:#fff;padding:38px 0}.sg{display:grid;grid-template-columns:repeat(5,1fr);text-align:center}.stat{border-right:1px solid #fff5}.stat:last-child{border:0}.num{font-size:34px;font-weight:900;margin:8px}.stat b{font-size:13px}.stat p{font-size:11px;color:#d9e0ea}
+.about{background:#f7f9fc}.ag,.cg{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}.box{background:#fff;padding:30px;border-radius:15px;box-shadow:0 10px 25px #0001}.about p,.box p{color:var(--m);line-height:1.7}.staff{background:#fff}.staffbox{background:var(--n);border-radius:18px;padding:38px;color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:35px}.staffbox p{color:#dbe4f0;line-height:1.7}.sl{display:grid;grid-template-columns:1fr 1fr;gap:12px}.si{background:#fff;color:#12233f;padding:18px;border-radius:10px}.si b{display:block}.si span{font-size:12px;color:#6b7788}
+.contact{background:#f7f9fc}.contact .box input,.contact .box select,.contact .box textarea{width:100%;padding:13px;margin:7px 0;border:1px solid #dce3ec;border-radius:8px}.contact textarea{height:110px}
+footer{background:#fff}.foot{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px;padding:40px 0}.foot h4{margin:0 0 12px}.foot p{font-size:13px;color:#667286;line-height:1.8}.bottom{background:var(--n);color:#fff;padding:13px 4%;display:flex;justify-content:space-between;font-size:11px}
+@media(max-width:900px){nav{display:none}.hg,.ag,.staffbox,.cg{grid-template-columns:1fr}.features{grid-template-columns:1fr 1fr}.services{grid-template-columns:repeat(3,1fr)}.sg{grid-template-columns:repeat(2,1fr);gap:20px}.hero h1{font-size:38px}.foot{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.features,.services,.sg,.sl,.foot{grid-template-columns:1fr}.feature,.stat{border-right:0;border-bottom:1px solid #e8edf3}.hero,.hg{min-height:700px}.hero h1{font-size:34px}.bottom{flex-direction:column;gap:8px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="brand">SWASTIK HEALTH CARE SERVICES</div><div class="sub">Staff Registration & Management</div></div></header>
-<main class="wrap">
-<div class="grid">
-<section class="card">
-<h2 id="formTitle">Register Staff</h2>
-<form id="staffForm">
-<div class="field"><label>Full Name *</label><input id="name" required placeholder="Enter full name"></div>
-<div class="field"><label>Mobile Number *</label><input id="phone" required type="tel" inputmode="numeric" placeholder="10-digit mobile number"></div>
-<div class="field"><label>Age *</label><input id="age" required type="number" min="18" max="80" placeholder="Age"></div>
-<div class="field"><label>Staff Type *</label><div class="types">
-<label><input type="radio" name="type" value="Nursing Staff" checked> Nursing Staff</label>
-<label><input type="radio" name="type" value="Care Taker Staff"> Care Taker Staff</label>
-</div></div>
-<div class="field"><label>Qualification *</label><input id="qualification" required placeholder="e.g. ANM, GNM, 12th Pass"></div>
-<div class="field"><label>Experience *</label><input id="experience" required placeholder="e.g. 2 years / Fresher"></div>
-<div class="field"><label>Address</label><textarea id="address" placeholder="Enter address"></textarea></div>
-<div class="field"><label>Joining Date</label><input id="joining" type="date"></div>
-<button class="primary" type="submit" id="saveBtn">Add Staff</button>
-<button class="secondary" type="button" id="cancelBtn" style="display:none;width:100%;margin-top:8px">Cancel Edit</button>
-</form>
-</section>
-
-<section class="card">
-<h2>Staff Directory</h2>
-<div class="stats"><div class="stat"><b id="total">0</b><span>Total Staff</span></div><div class="stat"><b id="nurses">0</b><span>Nursing Staff</span></div><div class="stat"><b id="care">0</b><span>Care Takers</span></div></div>
-<div class="toolbar"><input id="search" placeholder="Search by name or mobile number...">
-<select id="filter"><option value="All">All Staff</option><option value="Nursing Staff">Nursing Staff</option><option value="Care Taker Staff">Care Taker Staff</option></select></div>
-<div id="list"></div>
-</section>
-</div>
-</main>
+<header><div class="c nav"><a class="logo" href="#home"><div class="mark">✣</div><div class="lt"><b>SWASTIK</b><span>HEALTH CARE SERVICES</span></div></a><nav><a href="#home">Home</a><a href="#about">About Us</a><a href="#services">Services</a><a href="#staff">Staff</a><a href="#gallery">Gallery</a><a href="#contact">Contact Us</a></nav><a class="call" href="tel:9165059123">☎ Call Us<br>9165059123</a></div></header>
+<section class="hero" id="home"><div class="c hg"><div><div class="k">TRUSTED CARE. ALWAYS THERE.</div><h1>Professional Care<br>You Can Trust</h1><p>Swastik Health Care Services provides reliable and compassionate nursing and caretaker staff for your loved ones. 24×7 support with trained and verified staff.</p><div class="btns"><a class="btn gold" href="#services">✣ &nbsp; Our Services</a><a class="btn" href="tel:9165059123">☎ &nbsp; Call Now: 9165059123</a></div></div><form class="form" onsubmit="req(event)"><h2>Need Care Support?</h2><p>We are here to help you.</p><input required placeholder="Your Name"><input required type="tel" placeholder="Mobile Number"><select required><option value="">Select Service</option><option>Nursing Staff</option><option>Caretaker Services</option><option>Patient Attendant</option><option>Mother & Baby Care</option><option>Post Surgery Care</option><option>Home Care Services</option></select><button>➤ Send Request</button><p>We will contact you shortly.</p></form></div></section>
+<div class="c features"><div class="feature"><div class="ico">♟</div><div><h3>Verified Staff</h3><p>All our staff are verified, experienced and background checked.</p></div></div><div class="feature"><div class="ico">24/7</div><div><h3>24x7 Availability</h3><p>Day & night support available round the clock.</p></div></div><div class="feature"><div class="ico">✓</div><div><h3>Reliable & Safe</h3><p>Professional and reliable care for your loved ones.</p></div></div><div class="feature"><div class="ico">₹</div><div><h3>Affordable Pricing</h3><p>Quality care at affordable, transparent pricing.</p></div></div></div>
+<section id="services"><div class="c"><div class="head"><div class="k">OUR SERVICES</div><h2>Care Services We Provide</h2><div class="line"></div></div><div class="services">
+<div class="service"><div class="big">♟</div><h3>Nursing Staff</h3><p>Trained nurses for patient care, injections, dressing and monitoring.</p></div><div class="service"><div class="big">♿</div><h3>Caretaker Services</h3><p>Professional caretakers for elderly, sick or post-surgery assistance.</p></div><div class="service"><div class="big">✚</div><h3>Patient Attendant</h3><p>Daily activities, hygiene, feeding and patient movement support.</p></div><div class="service"><div class="big">♟</div><h3>Mother & Baby Care</h3><p>Experienced female staff for mothers and newborn babies.</p></div><div class="service"><div class="big">▣</div><h3>Post Surgery Care</h3><p>Special care for post-surgery patients at home.</p></div><div class="service"><div class="big">⌂</div><h3>Home Care Services</h3><p>Complete home care for short-term or long-term needs.</p></div></div></div></section>
+<div class="stats"><div class="c sg"><div class="stat">☺<div class="num">500+</div><b>Happy Families</b><p>Trusted by families.</p></div><div class="stat">♟<div class="num">300+</div><b>Trained Staff</b><p>Experienced & verified.</p></div><div class="stat">◷<div class="num">24/7</div><b>Support</b><p>Round the clock.</p></div><div class="stat">★<div class="num">100%</div><b>Satisfaction</b><p>Quality care.</p></div><div class="stat">✓<div class="num">2+</div><b>Years of Service</b><p>With dedication.</p></div></div></div>
+<section class="about" id="about"><div class="c ag"><div><div class="k">ABOUT SWASTIK</div><h2>Care • Compassion • Commitment</h2><p>Swastik Health Care Services connects families with dependable nursing and caretaker support at home, based on each family's requirement.</p><a class="btn gold" href="#contact">Contact Us</a></div><div class="box"><h3>Why Families Choose Swastik</h3><p>✓ Trained & verified staff</p><p>✓ Day & night availability</p><p>✓ Nursing & caretaker options</p><p>✓ Transparent, affordable service</p><p>✓ Quick response and support</p></div></div></section>
+<section class="staff" id="staff"><div class="c"><div class="staffbox"><div><div class="k">JOIN OUR TEAM</div><h2>Looking for Nursing or Caretaker Work?</h2><p>Register your details with Swastik. We can review your qualification, experience and preferred staff type.</p><a class="btn gold" href="#contact">Register as Staff</a></div><div class="sl"><div class="si"><b>🩺 Nursing Staff</b><span>ANM / GNM / qualified nursing professionals</span></div><div class="si"><b>❤️ Care Taker Staff</b><span>Experienced or fresher caretaker staff</span></div><div class="si"><b>📱 Mobile Number</b><span>Quick contact for duties</span></div><div class="si"><b>📄 Qualification & Experience</b><span>Details reviewed before joining</span></div></div></div></div></section>
+<section id="gallery"><div class="c"><div class="head"><div class="k">OUR WORK</div><h2>Swastik Care</h2><div class="line"></div></div><div class="box" style="text-align:center"><h3>Professional • Compassionate • Available</h3><p>Dependable home-care support for patients, elderly people, mothers, babies and families.</p></div></div></section>
+<section class="contact" id="contact"><div class="c"><div class="head"><div class="k">GET IN TOUCH</div><h2>Need Care or Want to Join?</h2><div class="line"></div></div><div class="cg"><div class="box"><h3>Contact Swastik</h3><p>📞 <b>9165059123</b></p><p>📍 Indore, Madhya Pradesh, India</p><p>🕐 24 Hours / 7 Days</p><p>✉ swastikhealthcareservices@gmail.com</p></div><form class="box" onsubmit="contact(event)"><input required placeholder="Full Name"><input required type="tel" placeholder="Mobile Number"><select><option>Nursing Staff</option><option>Care Taker Staff</option><option>Need Care Service</option></select><textarea placeholder="Qualification / Experience / Requirement"></textarea><button>Send Request</button></form></div></div></section>
+<footer><div class="c foot"><div class="logo"><div class="mark">✣</div><div class="lt"><b>SWASTIK</b><span>HEALTH CARE SERVICES</span></div></div><div><h4>Quick Contact</h4><p>☎ 9165059123</p><p>✉ swastikhealthcareservices@gmail.com</p></div><div><h4>Location</h4><p>Indore, Madhya Pradesh<br>India</p></div><div><h4>Working Hours</h4><p>◷ 24 Hours / 7 Days<br>Always Available</p></div></div><div class="bottom"><span>© 2026 Swastik Health Care Services. All Rights Reserved.</span><span>Care • Compassion • Commitment</span></div></footer>
 <script>
-const KEY="swastik_staff_v1";
-let staff=JSON.parse(localStorage.getItem(KEY)||"[]"), editId=null;
-const $=id=>document.getElementById(id);
-function save(){localStorage.setItem(KEY,JSON.stringify(staff));render()}
-function render(){
- const q=$("search").value.toLowerCase(), f=$("filter").value;
- const data=staff.filter(s=>(f==="All"||s.type===f)&&((s.name+" "+s.phone).toLowerCase().includes(q)));
- $("total").textContent=staff.length;$("nurses").textContent=staff.filter(s=>s.type==="Nursing Staff").length;$("care").textContent=staff.filter(s=>s.type==="Care Taker Staff").length;
- $("list").innerHTML=data.length?data.map(s=>`<div class="staff"><div><div class="name">${esc(s.name)}</div><span class="badge">${esc(s.type)}</span><div class="meta">📱 ${esc(s.phone)}<br>🎂 Age: ${esc(s.age)} &nbsp; | &nbsp; 🎓 ${esc(s.qualification)}<br>💼 Experience: ${esc(s.experience)}${s.joining?`<br>📅 Joined: ${esc(s.joining)}`:""}${s.address?`<br>📍 ${esc(s.address)}`:""}</div></div><div class="actions"><button class="secondary" onclick="edit('${s.id}')">Edit</button><button class="secondary" onclick="removeStaff('${s.id}')">Delete</button></div></div>`).join(""):`<div class="empty">No staff registered yet.</div>`;
-}
-function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-$("staffForm").addEventListener("submit",e=>{
- e.preventDefault();
- const obj={id:editId||Date.now().toString(),name:$("name").value.trim(),phone:$("phone").value.trim(),age:$("age").value, type:document.querySelector('input[name="type"]:checked').value,qualification:$("qualification").value.trim(),experience:$("experience").value.trim(),address:$("address").value.trim(),joining:$("joining").value};
- if(editId) staff=staff.map(s=>s.id===editId?obj:s); else staff.unshift(obj);
- save(); reset();
-});
-function edit(id){const s=staff.find(x=>x.id===id);editId=id;$("formTitle").textContent="Edit Staff";$("saveBtn").textContent="Update Staff";$("cancelBtn").style.display="block";
-$("name").value=s.name;$("phone").value=s.phone;$("age").value=s.age;$("qualification").value=s.qualification;$("experience").value=s.experience;$("address").value=s.address;$("joining").value=s.joining;document.querySelectorAll('input[name="type"]').forEach(r=>r.checked=r.value===s.type);scrollTo({top:0,behavior:"smooth"})}
-function removeStaff(id){if(confirm("Delete this staff record?")){staff=staff.filter(s=>s.id!==id);save()}}
-function reset(){editId=null;$("staffForm").reset();document.querySelector('input[name="type"][value="Nursing Staff"]').checked=true;$("formTitle").textContent="Register Staff";$("saveBtn").textContent="Add Staff";$("cancelBtn").style.display="none"}
-$("cancelBtn").onclick=reset;$("search").oninput=render;$("filter").onchange=render;render();
+function req(e){e.preventDefault();alert("Thank you! Swastik Health Care Services will contact you shortly.");e.target.reset()}
+function contact(e){e.preventDefault();alert("Request submitted. For faster assistance call 9165059123.");e.target.reset()}
 </script>
-</body>
-</html>
+</body></html>
