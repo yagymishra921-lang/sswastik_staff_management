@@ -33,6 +33,11 @@ footer{background:#fff}.foot{display:grid;grid-template-columns:1.5fr 1fr 1fr 1f
 <section class="contact" id="contact"><div class="c"><div class="head"><div class="k">GET IN TOUCH</div><h2>Need Care or Want to Join?</h2><div class="line"></div></div><div class="cg"><div class="box"><h3>Contact Swastik</h3><p>📞 <b>9165059123</b></p><p>📍 Indore, Madhya Pradesh, India</p><p>🕐 24 Hours / 7 Days</p><p>✉ swastikhealthcareservices@gmail.com</p></div><form class="box" onsubmit="contact(event)"><input required placeholder="Full Name"><input required type="tel" placeholder="Mobile Number"><select><option>Nursing Staff</option><option>Care Taker Staff</option><option>Need Care Service</option></select><textarea placeholder="Qualification / Experience / Requirement"></textarea><button>Send Request</button></form></div></div></section>
 <footer><div class="c foot"><div class="logo"><div class="mark">✣</div><div class="lt"><b>SWASTIK</b><span>HEALTH CARE SERVICES</span></div></div><div><h4>Quick Contact</h4><p>☎ 9165059123</p><p>✉ swastikhealthcareservices@gmail.com</p></div><div><h4>Location</h4><p>Indore, Madhya Pradesh<br>India</p></div><div><h4>Working Hours</h4><p>◷ 24 Hours / 7 Days<br>Always Available</p></div></div><div class="bottom"><span>© 2026 Swastik Health Care Services. All Rights Reserved.</span><span>Care • Compassion • Commitment</span></div></footer>
 <script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://bvjebkiplojpteocnmjv.supabase.co";
+const SUPABASE_KEY = sb_publishable_-HsaV5wqDhNsbFGtAI9ThQ_3NQi8pEo
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 function req(e){e.preventDefault();alert("Thank you! Swastik Health Care Services will contact you shortly.");e.target.reset()}
 function contact(e){e.preventDefault();alert("Request submitted. For faster assistance call 9165059123.");e.target.reset()}
 </script>
