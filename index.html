@@ -365,7 +365,7 @@ async function req(e){
     }]);
 
   if(error){
-    alert("Request submit nahi ho payi. Please try again.");
+    alert("ERROR: " + error.message);
     console.error(error);
     return;
   }
