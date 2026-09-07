@@ -338,6 +338,72 @@ nav{display:none}
 
 <script>
 const SUPABASE_URL = "https://bvjebkiplojpteocnmjv.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_........";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function req(e){
+  e.preventDefault();
+
+  const name = document.getElementById("careName").value.trim();
+  const mobile = document.getElementById("careMobile").value.trim();
+  const service = document.getElementById("careService").value;
+
+  const { error } = await supabaseClient
+    .from("staff")
+    .insert([{
+      full_name: name,
+      mobile: mobile,
+      staff_type: service,
+      status: "Pending",
+      notes: "Care service request"
+    }]);
+
+  if(error){
+    alert("ERROR: " + error.message);
+    console.error(error);
+    return;
+  }
+
+  alert("Thank you! Swastik Health Care Services will contact you shortly.");
+  e.target.reset();
+}
+
+async function contact(e){
+  e.preventDefault();
+
+  const name = document.getElementById("contactName").value.trim();
+  const mobile = document.getElementById("contactMobile").value.trim();
+  const type = document.getElementById("contactType").value;
+  const message = document.getElementById("contactMessage").value.trim();
+
+  const { error } = await supabaseClient
+    .from("staff")
+    .insert([{
+      full_name: name,
+      mobile: mobile,
+      staff_type: type,
+      status: "Pending",
+      notes: message
+    }]);
+
+  if(error){
+    alert("ERROR: " + error.message);
+    console.error(error);
+    return;
+  }
+
+  alert("Request submitted successfully. We will contact you shortly.");
+  e.target.reset();
+}
+</script>
+
+<script>
+const SUPABASE_URL = "https://bvjebkiplojpteocnmjv.supabase.co";
 const SUPABASE_KEY = "YOUR_PUBLISHABLE_KEY";
 
 const supabaseClient = supabase.createClient(
