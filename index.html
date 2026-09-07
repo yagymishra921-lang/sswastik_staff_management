@@ -365,7 +365,7 @@ async function req(e){
     }]);
 
   if(error){
-    alert("ERROR: " + error.message);
+    alert("Request submit nahi ho payi. Please try again.");
     console.error(error);
     return;
   }
@@ -395,7 +395,7 @@ async function contact(e){
     }]);
 
   if(error){
-    alert("Request submit nahi ho payi. Please try again.");
+    alert("ERROR: " + error.message);
     console.error(error);
     return;
   }
