@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swastik Health Care Services — Staff Registration</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0;padding:24px;color:#222}
+.card{max-width:650px;margin:30px auto;background:#fff;padding:28px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+h1{margin-top:0}.sub{color:#666}
+label{display:block;margin:14px 0 6px;font-weight:600}
+input,select,textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #ccc;border-radius:9px;font-size:15px}
+button{width:100%;margin-top:20px;padding:13px;border:0;border-radius:9px;background:#f57c00;color:#fff;font-size:16px;font-weight:700}
+button:disabled{opacity:.6}
+#msg{margin-top:16px;padding:12px;border-radius:9px;display:none}
+.success{background:#e8f7ed;color:#176b35}.error{background:#fdecec;color:#9b1c1c}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Staff Registration</h1>
+<p class="sub">Swastik Health Care Services</p>
+
+<form id="staffForm">
+<label>Full Name *</label>
+<input id="full_name" required>
+
+<label>Mobile Number *</label>
+<input id="mobile" type="tel" inputmode="numeric" required>
+
+<label>Age *</label>
+<input id="age" type="number" min="18" max="80" required>
+
+<label>Qualification</label>
+<input id="qualification">
+
+<label>Experience</label>
+<input id="experience" placeholder="e.g. 2 years">
+
+<label>Staff Type *</label>
+<select id="staff_type" required>
+<option value="">Select</option>
+<option>Nursing Staff</option>
+<option>Care Taker Staff</option>
+</select>
+
+<label>Address</label>
+<textarea id="address" rows="3"></textarea>
+
+<label>Joining Date</label>
+<input id="joining_date" type="date">
+
+<button id="submitBtn" type="submit">Submit Application</button>
+<div id="msg"></div>
+</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://bvjebkiplojpteocnmjv.supabase.co";
+const SUPABASE_KEY = sb_publishable_-HsaV5wqDhNsbFGtAI9ThQ_3NQi8pEo";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const form = document.getElementById("staffForm");
+const btn = document.getElementById("submitBtn");
+const msg = document.getElementById("msg");
+
+function showMsg(text, ok){
+  msg.textContent = text;
+  msg.className = ok ? "success" : "error";
+  msg.style.display = "block";
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
+  msg.style.display = "none";
+
+  const row = {
+    full_name: document.getElementById("full_name").value.trim(),
+    mobile: document.getElementById("mobile").value.trim(),
+    age: Number(document.getElementById("age").value),
+    qualification: document.getElementById("qualification").value.trim(),
+    experience: document.getElementById("experience").value.trim(),
+    staff_type: document.getElementById("staff_type").value,
+    address: document.getElementById("address").value.trim(),
+    joining_date: document.getElementById("joining_date").value || null,
+    status: "Pending",
+    notes: "Public staff application"
+  };
+
+  const { error } = await supabaseClient.from("Staff").insert([row]);
+
+  if(error){
+    console.error(error);
+    showMsg("Submission failed: " + error.message, false);
+    btn.disabled = false;
+    btn.textContent = "Submit Application";
+    return;
+  }
+
+  showMsg("Application submitted successfully. We will contact you shortly.", true);
+  form.reset();
+  btn.disabled = false;
+  btn.textContent = "Submit Application";
+});
+</script>
+</body>
+</html>
