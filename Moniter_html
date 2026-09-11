@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Swastik — Staff Monitor</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0;color:#222}
+header{background:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+main{max-width:1200px;margin:24px auto;padding:0 16px}
+.card{background:#fff;padding:20px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.07);margin-bottom:20px}
+input,button{padding:11px;border-radius:8px;border:1px solid #ccc}
+button{cursor:pointer;background:#222;color:#fff}
+#login{max-width:420px;margin:60px auto}.hidden{display:none}
+.tableWrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:950px}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+th{background:#fafafa}.status{font-weight:700}
+.error{color:#a00;margin-top:12px}.muted{color:#666}
+</style>
+</head>
+<body>
+
+<header>
+<strong>Swastik Health Care Services — Staff Monitor</strong>
+<button id="logout" class="hidden">Logout</button>
+</header>
+
+<main>
+<section id="login" class="card">
+<h2>Admin Login</h2>
+<p class="muted">Only the authorized Supabase account can view staff records.</p>
+<form id="loginForm">
+<input id="email" type="email" placeholder="Admin email" required style="width:100%;box-sizing:border-box;margin-bottom:10px">
+<input id="password" type="password" placeholder="Password" required style="width:100%;box-sizing:border-box">
+<button type="submit" style="width:100%;margin-top:12px">Login</button>
+</form>
+<div id="loginMsg" class="error"></div>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="card">
+<h2>Staff Applications</h2>
+<input id="search" placeholder="Search name, mobile, qualification..." style="width:100%;box-sizing:border-box">
+<p id="count" class="muted"></p>
+</div>
+<div class="card tableWrap">
+<table>
+<thead><tr>
+<th>Date</th><th>Name</th><th>Mobile</th><th>Age</th><th>Qualification</th>
+<th>Experience</th><th>Type</th><th>Address</th><th>Joining</th><th>Status</th><th>Notes</th>
+</tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://bvjebkiplojpteocnmjv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_-HsaV5wqDhNsbFGtAI9ThQ_3NQi8pEo";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const login = document.getElementById("login");
+const dashboard = document.getElementById("dashboard");
+const logout = document.getElementById("logout");
+const rows = document.getElementById("rows");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+
+let records = [];
+
+function render(){
+  const q = search.value.toLowerCase().trim();
+  const filtered = records.filter(r =>
+    [r.full_name,r.mobile,r.qualification,r.experience,r.staff_type,r.address,r.status,r.notes]
+      .some(v => String(v ?? "").toLowerCase().includes(q))
+  );
+  count.textContent = filtered.length + " record(s)";
+  rows.innerHTML = filtered.map(r => `
+    <tr>
+      <td>${new Date(r.created_at).toLocaleString()}</td>
+      <td>${escapeHtml(r.full_name)}</td>
+      <td>${escapeHtml(r.mobile)}</td>
+      <td>${escapeHtml(r.age)}</td>
+      <td>${escapeHtml(r.qualification)}</td>
+      <td>${escapeHtml(r.experience)}</td>
+      <td>${escapeHtml(r.staff_type)}</td>
+      <td>${escapeHtml(r.address)}</td>
+      <td>${escapeHtml(r.joining_date)}</td>
+      <td class="status">${escapeHtml(r.status)}</td>
+      <td>${escapeHtml(r.notes)}</td>
+    </tr>`).join("");
+}
+function escapeHtml(v){
+  return String(v ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+async function loadRecords(){
+  const { data, error } = await supabaseClient.from("Staff").select("*").order("created_at",{ascending:false});
+  if(error){
+    document.getElementById("loginMsg").textContent = "Could not load records: " + error.message;
+    return;
+  }
+  records = data || [];
+  render();
+}
+async function showSession(){
+  const { data } = await supabaseClient.auth.getSession();
+  if(data.session){
+    login.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+    logout.classList.remove("hidden");
+    await loadRecords();
+  }
+}
+document.getElementById("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  document.getElementById("loginMsg").textContent = "Logging in...";
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email: document.getElementById("email").value.trim(),
+    password: document.getElementById("password").value
+  });
+  if(error){ document.getElementById("loginMsg").textContent = error.message; return; }
+  document.getElementById("loginMsg").textContent = "";
+  await showSession();
+});
+logout.addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  location.reload();
+});
+search.addEventListener("input", render);
+showSession();
+</script>
+</body>
+</html>
+
