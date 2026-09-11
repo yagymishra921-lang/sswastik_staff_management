@@ -353,7 +353,7 @@ async function req(e){
   const service = document.getElementById("careService").value;
 
   const { error } = await supabaseClient
-    .from("staff")
+    .from("Staff")
     .insert([{
       full_name: name,
       mobile: mobile,
@@ -381,7 +381,7 @@ async function contact(e){
   const message = document.getElementById("contactMessage").value.trim();
 
   const { error } = await supabaseClient
-    .from("staff")
+    .from("Staff")
     .insert([{
       full_name: name,
       mobile: mobile,
